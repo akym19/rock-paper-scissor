@@ -14,22 +14,19 @@ function capitalize(text){
 let computerSelection;
 let hand;
 let playerSelection;
-let playerScore;
-let computerScore;
+let playerScore = 0;
+let computerScore = 0;
 
 function playRound(playerSelection, computerSelection){
     hand = prompt("Hand? ");
     playerSelection = capitalize(hand);
     computerSelection = getComputerChoice();
-    playerScore = 0;
-    computerScore = 0;
 
     function win(){
         let player = playerSelection
         let computer = computerSelection
         let message = `You win! ${player} beats ${computer}`;
         // return message;
-        playerScore++;
         console.log(message)
     }
     
@@ -38,7 +35,6 @@ function playRound(playerSelection, computerSelection){
         let computer = computerSelection
         let message = `You lose! ${computer} beats ${player}`;
         // return message;
-        computerScore++;
         console.log(message)
     }
 
@@ -48,12 +44,14 @@ function playRound(playerSelection, computerSelection){
         (playerSelection === 'Paper' && computerSelection === 'Rock')||
         (playerSelection === 'Rock' && computerSelection === 'Scissors')||
         (playerSelection === 'Scissors' && computerSelection === 'Paper')){
-        return win();
+            playerScore++
+            return win();
     } else if (
         (computerSelection === 'Paper' && playerSelection === 'Rock')||
         (computerSelection === 'Rock' && playerSelection === 'Scissors')||
         (computerSelection === 'Scissors' && playerSelection === 'Paper')){
-        return lose();
+            computerScore++
+            return lose();
     }
 }
 
@@ -61,9 +59,13 @@ function game(){
     for (let round = 0; round < 5; round++){
         playRound(playerSelection, computerSelection);
     }
-    if(playerScore > computerScore){
+    if (playerScore > computerScore){
         console.log("You win! You are hero!")
-    } else {
+    } else if (playerScore < computerScore) {
         console.log("You lose! Booooo!")
+    } else {
+        console.log("It's a draw!")
     }
+    console.log(`Final score: Player: ${playerScore} Computer ${computerScore}`)
+    playerScore = 0, computerScore = 0;
 }
