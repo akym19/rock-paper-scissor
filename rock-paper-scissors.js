@@ -1,27 +1,47 @@
 const hands = ['Rock', 'Paper', 'Scissors'];
 
 function getComputerChoice(){
-    const choice = hands[Math.floor(Math.random()*hands.length)]
+    let choice = hands[Math.floor(Math.random()*hands.length)]
     return choice;
 }
 
-let computerSelection = getComputerChoice();
-
-function win(){
-    let player = playerSelection
-    let computer = computerSelection
-    let message = `You win! ${player} beats ${computer}`;
-    return message;
+function capitalize(text){
+    let first = text.charAt(0);
+    let other = (text.slice(1, text.length)).toLowerCase();
+    return first.toUpperCase() + other;
 }
 
-function lose(){
-    let player = playerSelection
-    let computer = computerSelection
-    let message = `You lose! ${computer} beats ${player}`;
-    return message;
-}
+let computerSelection;
+let hand;
+let playerSelection;
+let playerScore;
+let computerScore;
 
 function playRound(playerSelection, computerSelection){
+    hand = prompt("Hand? ");
+    playerSelection = capitalize(hand);
+    computerSelection = getComputerChoice();
+    playerScore = 0;
+    computerScore = 0;
+
+    function win(){
+        let player = playerSelection
+        let computer = computerSelection
+        let message = `You win! ${player} beats ${computer}`;
+        // return message;
+        playerScore++;
+        console.log(message)
+    }
+    
+    function lose(){
+        let player = playerSelection
+        let computer = computerSelection
+        let message = `You lose! ${computer} beats ${player}`;
+        // return message;
+        computerScore++;
+        console.log(message)
+    }
+
     if (playerSelection === computerSelection){
         console.log("It's a tie!");
     } else if (
@@ -37,23 +57,13 @@ function playRound(playerSelection, computerSelection){
     }
 }
 
-let playerScore = 0;
-let computerScore = 0;
-
 function game(){
     for (let round = 0; round < 5; round++){
-        let playerSelection = prompt("Hand? ");
-        playRound(playerSelection, computerSelection)
-        let result = playRound().slice(4,7)
-        if (result === 'win'){
-            playerScore++;
-        } else if (result === 'los'){
-            computerScore++;
-        }
+        playRound(playerSelection, computerSelection);
     }
-    if (playerScore > computerScore){
-        console.log("You win!");
+    if(playerScore > computerScore){
+        console.log("You win! You are hero!")
     } else {
-        console.log("You lose!")
+        console.log("You lose! Booooo!")
     }
 }
